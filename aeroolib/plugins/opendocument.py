@@ -349,8 +349,8 @@ class Template(MarkupTemplate):
                 else:
                     expr = check_except_directive(expr) and "__filter(%s)" % statement.attrib["{%s}description" % self.namespaces['text']][1:-1] or expr
             elif statement.tag == text_a:
-                expr = urllib.unquote(statement.attrib[xlink_href_attrib][9:])
-                expr = check_except_directive(expr) and "__filter(%s)" % urllib.unquote(statement.attrib[xlink_href_attrib][9:]) or expr
+                expr = urllib.parse.unquote(statement.attrib[xlink_href_attrib][9:])
+                expr = check_except_directive(expr) and "__filter(%s)" % urllib.parse.unquote(statement.attrib[xlink_href_attrib][9:]) or expr
 
             if not expr:
                 raise OOTemplateError("No expression in the tag",
@@ -688,7 +688,7 @@ class Template(MarkupTemplate):
         href_attrib = '{%s}href' % self.namespaces['xlink']
         py_attrs = '{%s}attrs' % self.namespaces['py']
         for a in tree.xpath(xpath_href_expr, namespaces=self.namespaces):
-            a.attrib[py_attrs] = "__aeroo_hyperlink(%s)" % urllib.unquote(a.attrib[href_attrib]).replace('python://','').replace('pythonuri://','')#[9:]
+            a.attrib[py_attrs] = "__aeroo_hyperlink(%s)" % urllib.parse.unquote(a.attrib[href_attrib]).replace('python://','').replace('pythonuri://','')#[9:]
             del a.attrib[href_attrib]
 
     def _handle_innerdocs(self, tree):
