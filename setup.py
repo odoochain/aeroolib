@@ -31,8 +31,13 @@ and report together, find reports by mimetypes/name/python objects.
     version=get_version(),
     packages=find_packages(),
     python_requires='>=3',
+    # use this genshi version to fix error when, for eg, you send arguments like "date=True" check this https://genshi.edgewall.org/ticket/600
+    dependency_links=[
+        'git+https://github.com/edgewall/genshi.git/@stable/0.7.x#egg=genshi-0',
+    ],
     install_requires=[
-        "Genshi >= 0.5",
+        # "genshi >= 0.5",
+        "genshi",
         "lxml >= 2.0"
     ],
     classifiers=[
