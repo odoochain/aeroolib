@@ -499,8 +499,7 @@ class Template(MarkupTemplate):
         repeat_tag = '{%s}repeat' % AEROO_URI
 
         # table node (it is not necessarily the direct parent of ancestor)
-        table_node = ancestor.iterancestors('{%s}table' % table_namespace) \
-                             .next()
+        table_node = next(ancestor.iterancestors('{%s}table' % table_namespace))
         table_name = table_node.attrib['{%s}name' % table_namespace]
 
         # add counting instructions
@@ -643,7 +642,7 @@ class Template(MarkupTemplate):
         assert row_node.tag == table_row_tag
         next_rows = row_node.itersiblings(table_row_tag)
         for row_idx in range(rows_spanned-1):
-            next_row_node = next_rows.next()
+            next_row_node = next(next_rows)
             rows_to_wrap.append(next_row_node)
             # compute the start and end nodes
             first = next_row_node[opening_pos]
@@ -1017,7 +1016,7 @@ class OOSerializer:
                 next_child = new_parent_node
                 try:
                     while(True):
-                        curr_child = parent_children.next()
+                        curr_child = next(parent_children)
                         if curr_child.tag=='{%s}span' % namespaces['text'] and tag.text==curr_child.text:
                             new_span_node = EtreeElement('{%s}span' % namespaces['text'],
                                                 attrib=tag.attrib,
@@ -1047,14 +1046,14 @@ class OOSerializer:
                 try:
                     next_text = True
                     while(next_text):
-                        next_child = parent_children.next()
+                        next_child = next(parent_children)
                         curr_child.append(next_child)
                         next_text = next_child.text
                 except StopIteration:
                     pass
                 try:
                     while(True):
-                        next_child = parent_children.next()
+                        next_child = next(parent_children)
                         if not next_child.text:
                             curr_child.append(next_child)
                         else:
