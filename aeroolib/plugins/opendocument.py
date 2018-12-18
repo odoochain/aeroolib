@@ -1087,7 +1087,7 @@ class OOSerializer:
                     guess_type = 'float'
                     tag.attrib['{%s}value' % namespaces['office']] = tag[0].text
                     # AKRETION HACK https://github.com/aeroo/aeroolib/issues/7
-                    tag.attrib['{%s}value-type' % namespaces['calcext']] = guess_type
+                    tag.attrib['{%s}value-type' % namespaces.get('calcext')] = guess_type
                 except (ValueError,TypeError):
                     guess_type = 'string'
             tag.attrib['{%s}value-type' % namespaces['office']] = guess_type
